@@ -96,7 +96,7 @@ class AuthController extends Controller
                 'message'=> 'User logged out successfully',
             ]);
         }catch(\Throwable $e){
-            \Log::info(json_encode(["request"=>$request->all(), "error"=>$e]));
+            \Log::info(json_encode(["error"=>$e]));
             return response()->json([
                 'success'=>false,
                 'message'=> 'Sorry something went wrong.',

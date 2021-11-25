@@ -31,7 +31,7 @@ class DashboardController extends Controller
             $slug =  Str::random(5);
             $isUsed = Url::whereSlug($slug)->first();
             $counter = 0;
-            $thresh = 916132832; //62^5 = 916,132,832 possible characters could be generatd as a slug
+            $thresh = 1000000000; //62^5 = 916,132,832 possible characters could be generatd as a slug
             while($isUsed && $counter <= $thresh ){
                 $counter++;
             }
@@ -93,10 +93,25 @@ class DashboardController extends Controller
             $slug = $request->s;
             $url_and_slug = Url::select('destination','slug')->where('slug', $slug)->get();
             $fullUrl = $url_and_slug[0]['destination'];
+            return redirect(fullUrl);
+            // return response()->json([
+            //     'success'=>true,
+            //     'fullUrl'=>$fullUrl,
+            // ], 201);
+         
+        }catch(\Throwable $e){
+            \Log::info(json_encode(["request"=>$request->all(), "error"=>$e]));
             return response()->json([
-                'success'=>true,
-                'fullUrl'=>$fullUrl,
-            ], 201);
+                'success'=>false,
+                'message'=> 'Sorry something went wrong.',
+            ], 500);
+        }
+    }
+
+    public function viewDashboard(Request $request){
+        try{
+          
+            return view('dashboard');  //['latestUrls'=>Url::orderBy('id', 'desc')->paginate(8)]
          
         }catch(\Throwable $e){
             \Log::info(json_encode(["request"=>$request->all(), "error"=>$e]));

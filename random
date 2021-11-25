@@ -1,0 +1,17 @@
+@foreach ($list_items as $key=>$item)
+                                        <tr>
+                                            <td>{{$key + 1}}</td>  
+                                            <td>{{$item->name}}</td>
+                                            <td style="text-align:center">
+                                                {{$item->is_complete === 0 ? "No" :"Yes"}}
+                                            </td>
+                                            <td style="text-align:center; ">
+                                                <input style="cursor:pointer" class="update" id="update{{$item->id}}" type="checkbox" name="is_complete"  {{$item->is_complete === 1 ? 'checked' : ''}}>                          
+                                            </td>
+                                            <td style="text-align:center; ">
+                                                <button style="cursor:pointer; background:#000;" >
+                                                    <i  class="fa fa-trash delete"  id="delete{{$item->id}}"   aria-hidden="true"></i>
+                                                </button>
+                                            </td>
+                                        </tr>      
+                                    @endforeach
