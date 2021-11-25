@@ -9,9 +9,12 @@ class Url extends Model
 {
     use HasFactory;
 
-    public function getSlugAttribute($value)
+    protected $fillable = ['destination','slug'];
+
+    public function getShortenedUrlAttribute()
     {
-        $shortUrl = env('APP_URL')."?s=".$value;
-        return $this->attributes['shortenedUrl'] == $shortUrl;
+        $shortUrl = env('APP_URL')."/api?s=". $this->attributes['slug'];
+        return $this->attributes['shortenedUrl'] = $shortUrl;
     }
+    protected $appends = ['shortened_url'];
 }
